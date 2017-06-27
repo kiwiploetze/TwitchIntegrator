@@ -209,12 +209,12 @@ namespace TwitchIntegrator
                     residential = (ArrayList)dictionary["residentialAdds"];
                     office = (ArrayList)dictionary["officeAdds"];
 
-                    if (dictionary.ContainsKey("updateKey"))
+                    if (dictionary.ContainsKey("updateRate"))
                     {
-                        updateRate = int.Parse(dictionary["updateKey"].ToString());
+                        updateRate = int.Parse(dictionary["updateRate"].ToString());
                     } else
                     {
-                        updateRate = 100;
+                        updateRate = 50000;
                     }
 
                 }

@@ -38,7 +38,7 @@ namespace TwitchIntegrator
     {
       get
       {
-        return "Integrate your Twitch viewers into Cities: Skylines. Building, Street and Citizen Names will be auto-generated with names of your Twitch viewers! Please configure this Mod by editing the <Mod-Path>/config.txt (JSON Format)";
+        return "Integrate your Twitch viewers. Building, Street and Citizen Names will be auto-generated with names of your Twitch viewers! Please configure this Mod by editing the <Mod-Path>/config.txt (JSON Format)";
       }
     }
 
