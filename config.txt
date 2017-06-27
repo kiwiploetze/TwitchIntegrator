@@ -5,5 +5,6 @@
   "commercialAdds": ["Stand", "Verkauf", "Laden", "Kauf", "Büdchen", "Zeile", "Supermarkt", "Markt", "Apotheke"],
   "residentialAdds": ["Haus", "Anwesen", "Schloss", "Palast", "Hütte", "Apartement"],
   "officeAdds":  ["UG", "OHG", "Unternehmensberatung", "Consulting", "GmbH", "AG", "KG", "Kanzlei", "Notariat", "Streamingdienste", "ThinkTank", "Marketing", "Bank", "Versicherung"],
-}
+  "updateRate": "100"
+ }
 
