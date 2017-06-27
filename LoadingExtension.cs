@@ -39,7 +39,7 @@ namespace TwitchIntegrator
     {
       if (mode == LoadMode.LoadGame || mode == LoadMode.NewGame)
       {
-        TwitchNames.Initialize("gronkh");
+        TwitchNames.Initialize();
 
         Dictionary<Type, Type> componentRemap = new Dictionary<Type, Type> ();
         //componentRemap.Add (typeof(CitizenManager), typeof(CitizenManagerMod));

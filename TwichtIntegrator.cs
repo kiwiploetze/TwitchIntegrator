@@ -29,25 +29,94 @@ RedirectionHelper.cs was taken from the Moledozer mod found here:
 
 */
 
+using System;
 using ICities;
+using UnityEngine;
+using System.Collections;
+
 namespace TwitchIntegrator
 {
-  public class TwitchIntegrator : IUserMod
-  {
-    public string Description
+    public class TwitchIntegrator : IUserMod
     {
-      get
-      {
-        return "Integrate your Twitch viewers. Building, Street and Citizen Names will be auto-generated with names of your Twitch viewers! Please configure this Mod by editing the <Mod-Path>/config.txt (JSON Format)";
-      }
-    }
+        public string Description
+        {
+            get
+            {
+                return "Integrate your Twitch viewers. Building, Street and Citizen Names will be generated from your Twitch viewers!";
+            }
+        }
 
-    public string Name
-    {
-      get
-      {
-        return "Twitch Integrator";
-      }
+        public string Name
+        {
+            get
+            {
+                return "Twitch Integrator";
+            }
+        }
+
+        private void EventTextSubmitted(string c)
+        {
+            DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "sub:"+c);
+        }
+
+        private void UserTextChanged(string c)
+        {
+            TwitchNamesSettings.username = c;
+        }
+
+        private void RateTextChanged(string c)
+        {
+            TwitchNamesSettings.updateRate = int.Parse(c);
+        }
+
+        private void StreetTextChanged(string c)
+        {
+            TwitchNamesSettings.streets = new ArrayList(c.Split(','));
+        }
+
+
+        private void IndustrialTextChanged(string c)
+        {
+            TwitchNamesSettings.industrial = new ArrayList(c.Split(','));
+        }
+
+        private void CommercialTextChanged(string c)
+        {
+            TwitchNamesSettings.commercial = new ArrayList(c.Split(','));
+        }
+
+        private void ResidentialTextChanged(string c)
+        {
+            TwitchNamesSettings.residential = new ArrayList(c.Split(','));
+        }
+
+        private void OfficeTextChanged(string c)
+        {
+            TwitchNamesSettings.office = new ArrayList(c.Split(','));
+        }
+
+
+        private void EventClick()
+        {
+            DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "click");
+            TwitchNamesSettings.SaveConfig();
+        }
+
+
+        public void OnSettingsUI(UIHelperBase helper)
+        {
+            TwitchNamesSettings.init();
+            TwitchNamesSettings.LoadConfig();
+            UIHelperBase group = helper.AddGroup("TwitchIntegrator");
+            group.AddTextfield("Twitch Channel Name", TwitchNamesSettings.username, UserTextChanged, EventTextSubmitted);
+            group.AddTextfield("Update Rate", TwitchNamesSettings.updateRate.ToString(), RateTextChanged, EventTextSubmitted);
+            group.AddTextfield("Street Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.streets), StreetTextChanged, EventTextSubmitted);
+            group.AddTextfield("Industrial Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.industrial), IndustrialTextChanged, EventTextSubmitted);
+            group.AddTextfield("Commercial Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.commercial), CommercialTextChanged, EventTextSubmitted);
+            group.AddTextfield("Residential Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.residential), ResidentialTextChanged, EventTextSubmitted);
+            group.AddTextfield("Office Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.office), OfficeTextChanged, EventTextSubmitted);
+
+            group.AddButton("Save", EventClick);
+        }
     }
-  }
 }

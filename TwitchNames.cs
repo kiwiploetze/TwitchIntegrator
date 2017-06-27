@@ -12,7 +12,6 @@ namespace TwitchIntegrator
 {
     public class TwitchNames
     {
-        private string username;
         public List<string> nameArray;
         private static TwitchNames tn;
         private static bool initialized = false;
@@ -20,22 +19,15 @@ namespace TwitchIntegrator
         public Dictionary<int, string> roadNames, citizenNames, commercialNames, residentialNames, officeNames, industrialNames;
         private System.Random rnd;
 
-        public static int updateRate;
-        public static ArrayList industrial;
-        public static ArrayList commercial;
-        public static ArrayList residential;
-        public static ArrayList office;
-        public static ArrayList streets;
-
         /*public static string[] industrial = { "Fabrik", "Fertigung", "Manufaktur", "Werk", "Industriepark" };
         public static string[] commercial = { "Laden", "Kauf", "Büdchen", "Zeile", "Supermarkt", "Markt", "Apotheke" };
         public static string[] residential = { "Haus", "Anwesen", "Schloss", "Palast", "Hütte", "Apartement" };
         public static string[] office = { "Consulting", "GmbH", "AG", "KG", "Kanzlei", "Notariat", "Streamingdienste", "ThinkTank", "Marketing", "Bank", "Versicherung" };
         public static string[] streets = { "Strasse", "Allee", "Weg", "Gasse" };*/
 
-        public static void Initialize(string user)
+        public static void Initialize()
         {
-            tn = new TwitchNames(user);
+            tn = new TwitchNames();
             initialized = true;
             updateCycles = 0;
             tn.UpdateNames();
@@ -43,11 +35,11 @@ namespace TwitchIntegrator
 
         public static void Update()
         {
-            if (initialized && updateRate != -1)
+            if (initialized && TwitchNamesSettings.updateRate != -1)
             {
                 updateCycles++;
 
-                if (updateCycles == updateRate)
+                if (updateCycles == TwitchNamesSettings.updateRate)
                 {
                     tn.UpdateNames();
                     updateCycles = 0;
@@ -68,9 +60,9 @@ namespace TwitchIntegrator
             } else
             {
                 name = tn.GetRandomName();
-                if (streets.Count > 0) {
-                    no = id % streets.Count;
-                    name += " " + streets[no].ToString();
+                if (TwitchNamesSettings.streets.Count > 0) {
+                    no = id % TwitchNamesSettings.streets.Count;
+                    name += " " + TwitchNamesSettings.streets[no].ToString();
                 }
                 tn.roadNames.Add(id, name);
                 return name;
@@ -90,10 +82,10 @@ namespace TwitchIntegrator
             {
 
                 name = tn.GetRandomName();
-                if (commercial.Count > 0)
+                if (TwitchNamesSettings.commercial.Count > 0)
                 {
-                    no = id % commercial.Count;
-                    name += "s " + commercial[no].ToString();
+                    no = id % TwitchNamesSettings.commercial.Count;
+                    name += "s " + TwitchNamesSettings.commercial[no].ToString();
                 }
                 tn.commercialNames.Add(id, name);
                 return name;
@@ -113,10 +105,10 @@ namespace TwitchIntegrator
             {
 
                 name = tn.GetRandomName();
-                if (industrial.Count > 0)
+                if (TwitchNamesSettings.industrial.Count > 0)
                 {
-                    no = id % industrial.Count;
-                    name += "s " + industrial[no].ToString();
+                    no = id % TwitchNamesSettings.industrial.Count;
+                    name += "s " + TwitchNamesSettings.industrial[no].ToString();
                 }
                 tn.industrialNames.Add(id, name);
                 return name;
@@ -136,10 +128,10 @@ namespace TwitchIntegrator
             {
 
                 name = tn.GetRandomName();
-                if (residential.Count > 0)
+                if (TwitchNamesSettings.residential.Count > 0)
                 {
-                    no = id % residential.Count;
-                    name += "s " + residential[no].ToString();
+                    no = id % TwitchNamesSettings.residential.Count;
+                    name += "s " + TwitchNamesSettings.residential[no].ToString();
                 }
                 tn.residentialNames.Add(id, name);
                 return name;
@@ -159,10 +151,10 @@ namespace TwitchIntegrator
             {
 
                 name = tn.GetRandomName();
-                if (office.Count > 0)
+                if (TwitchNamesSettings.office.Count > 0)
                 {
-                    no = id % office.Count;
-                    name += "s " + office[no].ToString();
+                    no = id % TwitchNamesSettings.office.Count;
+                    name += "s " + TwitchNamesSettings.office[no].ToString();
                 }
                 tn.officeNames.Add(id, name);
                 return name;
@@ -175,9 +167,11 @@ namespace TwitchIntegrator
         }
 
 
-        public TwitchNames(string user)
+        public TwitchNames()
         {
-            this.username = user;
+            TwitchNamesSettings.init();
+            TwitchNamesSettings.LoadConfig();
+
             this.nameArray = new List<string>();
             this.roadNames = new Dictionary<int, string>();
             this.commercialNames = new Dictionary<int, string>();
@@ -185,46 +179,6 @@ namespace TwitchIntegrator
             this.residentialNames = new Dictionary<int, string>();
             this.officeNames = new Dictionary<int, string>();
             this.rnd = new System.Random();
-            streets = new ArrayList();
-            commercial = new ArrayList();
-            industrial = new ArrayList();
-            residential = new ArrayList();
-            office = new ArrayList();
-
-            string file =  DataLocation.modsPath + "/TwitchIntegrator/config.txt";
-            System.Object obj;
-
-            if (FileUtils.Exists(file))
-            {
-                string fileText = System.IO.File.ReadAllText(file);
-                obj = ColossalFramework.HTTP.JSON.JsonDecode(fileText);
-
-                if (obj != null)
-                {
-                    Hashtable dictionary = (Hashtable)obj;
-                    this.username = dictionary["user"].ToString();
-                    streets = (ArrayList)dictionary["roadAdds"];
-                    industrial = (ArrayList)dictionary["industrialAdds"];
-                    commercial = (ArrayList)dictionary["commercialAdds"];
-                    residential = (ArrayList)dictionary["residentialAdds"];
-                    office = (ArrayList)dictionary["officeAdds"];
-
-                    if (dictionary.ContainsKey("updateRate"))
-                    {
-                        updateRate = int.Parse(dictionary["updateRate"].ToString());
-                    } else
-                    {
-                        updateRate = 50000;
-                    }
-
-                }
-
-
-            }
-            else
-            {
-                throw new Exception("KiwiPloetzeTwitchNames: Can't find config file!!!!!");
-            }
         }
 
 
@@ -269,7 +223,7 @@ namespace TwitchIntegrator
 
         private string GET()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://tmi.twitch.tv/group/user/" + username + "/chatters");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://tmi.twitch.tv/group/user/" + TwitchNamesSettings.username + "/chatters");
             try
             {
                 WebResponse response = request.GetResponse();
