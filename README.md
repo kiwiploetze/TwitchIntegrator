@@ -17,8 +17,8 @@ C:\Users\<username>\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\Twi
 * If you don't want an update set the UpdateRate to -1
 * Configure the Mod either by the built-in option menu or the config file
 * Config file syntax:
-	* <key>: <value>
-	* <value> of *Adds is a comma separated list
+	* "key": "value"
+	* "value" of *Adds is a comma separated list
 
 
 
