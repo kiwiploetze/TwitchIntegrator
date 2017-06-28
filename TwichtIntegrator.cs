@@ -109,12 +109,12 @@ namespace TwitchIntegrator
             TwitchNamesSettings.LoadConfig();
             UIHelperBase group = helper.AddGroup("TwitchIntegrator");
             group.AddTextfield("Twitch Channel Name", TwitchNamesSettings.username, UserTextChanged, EventTextSubmitted);
-            group.AddTextfield("Update Rate", TwitchNamesSettings.updateRate.ToString(), RateTextChanged, EventTextSubmitted);
-            group.AddTextfield("Street Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.streets), StreetTextChanged, EventTextSubmitted);
-            group.AddTextfield("Industrial Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.industrial), IndustrialTextChanged, EventTextSubmitted);
-            group.AddTextfield("Commercial Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.commercial), CommercialTextChanged, EventTextSubmitted);
-            group.AddTextfield("Residential Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.residential), ResidentialTextChanged, EventTextSubmitted);
-            group.AddTextfield("Office Suffixes", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.office), OfficeTextChanged, EventTextSubmitted);
+            group.AddTextfield("Update Rate (in Simulation Frames)", TwitchNamesSettings.updateRate.ToString(), RateTextChanged, EventTextSubmitted);
+            group.AddTextfield("Street Suffixes (comma separated)", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.streets), StreetTextChanged, EventTextSubmitted);
+            group.AddTextfield("Industrial Suffixes (comma separated)", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.industrial), IndustrialTextChanged, EventTextSubmitted);
+            group.AddTextfield("Commercial Suffixes (comma separated)", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.commercial), CommercialTextChanged, EventTextSubmitted);
+            group.AddTextfield("Residential Suffixes (comma separated)", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.residential), ResidentialTextChanged, EventTextSubmitted);
+            group.AddTextfield("Office Suffixes (comma separated)", TwitchNamesSettings.GetStringRepresentation(TwitchNamesSettings.office), OfficeTextChanged, EventTextSubmitted);
 
             group.AddButton("Save", EventClick);
         }

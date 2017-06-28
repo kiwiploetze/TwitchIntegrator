@@ -23,18 +23,13 @@ namespace TwitchIntegrator
 
         public static void init()
         {
-            username = "gronkh";
-            updateRate = 50000;
+            username = "";
+            updateRate = -1;
             streets = new ArrayList();
-            streets.Add("Strasse");
             commercial = new ArrayList();
-            commercial.Add("Laden");
             industrial = new ArrayList();
-            industrial.Add("Fabrik");
             residential = new ArrayList();
-            residential.Add("Haus");
             office = new ArrayList();
-            office.Add("Büro");
 
             string file = configFilePath + configFileName;
 
@@ -44,14 +39,15 @@ namespace TwitchIntegrator
                 {
                     Directory.CreateDirectory(configFilePath);
                 }
-                File.Create(file);
+                FileStream fs = File.Create(file);
+                fs.Close();
+                LoadDefaults();
                 SaveConfig();
             }
         }
 
         public static void LoadConfig()
         {
-            string[] values;
             string file = configFilePath + configFileName;
             string fileText = System.IO.File.ReadAllText(file);
 
@@ -63,30 +59,25 @@ namespace TwitchIntegrator
                 switch (tokens[0])
                 {
                     case "user":
-                        username = tokens[1];
+                        username = tokens[1].Trim();
                         break;
                     case "updateRate":
-                        updateRate = int.Parse(tokens[1]);
+                        updateRate = int.Parse(tokens[1].Trim());
                         break;
                     case "roadAdds":
-                        values = tokens[1].Split(',');
-                        streets = new ArrayList(values);
+                        streets = GetArrayListFromString(tokens[1]);
                         break;
                     case "industrialAdds":
-                        values = tokens[1].Split(',');
-                        industrial = new ArrayList(values);
+                        industrial = GetArrayListFromString(tokens[1]);
                         break;
                     case "commercialAdds":
-                        values = tokens[1].Split(',');
-                        commercial = new ArrayList(values);
+                        commercial = GetArrayListFromString(tokens[1]);
                         break;
                     case "residentialAdds":
-                        values = tokens[1].Split(',');
-                        residential = new ArrayList(values);
+                        residential = GetArrayListFromString(tokens[1]);
                         break;
                     case "officeAdds":
-                        values = tokens[1].Split(',');
-                        office = new ArrayList(values);
+                        office = GetArrayListFromString(tokens[1]);
                         break;
                 }
             }
@@ -122,6 +113,49 @@ namespace TwitchIntegrator
             }
 
             return text;
+        }
+
+        public static ArrayList GetArrayListFromString(string str)
+        {
+            ArrayList list = new ArrayList();
+            string[] values = str.Split(',');
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = values[i].Trim();
+                list.Add(values[i]);
+            }
+            return list;
+        }
+
+
+        private static void LoadDefaults()
+        {
+            username = "gronkh";
+            updateRate = 50000;
+            streets.Add("Strasse");
+            streets.Add("Weg");
+            streets.Add("Allee");
+            streets.Add("Gasse");
+            commercial.Add("Laden");
+            commercial.Add("Supermarkt");
+            commercial.Add("Drogerie");
+            commercial.Add("Apotheke");
+            commercial.Add("Mode");
+            commercial.Add("Elektroladen");        
+            industrial.Add("Fabrik");
+            industrial.Add("Ferigung");
+            industrial.Add("Logistik");
+            industrial.Add("Industriepark");
+            residential.Add("Haus");
+            residential.Add("Villa");
+            residential.Add("Anwesen");
+            residential.Add("Hütte");
+            office.Add("Büro");
+            office.Add("Kanzlei");
+            office.Add("Versicherung");
+            office.Add("AG");
+            office.Add("GmbH");
+            office.Add("Streamingdienste");
         }
 
     }

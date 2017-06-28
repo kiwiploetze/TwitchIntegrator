@@ -207,7 +207,7 @@ namespace TwitchIntegrator
             string name;
             string stream = this.GET();
             int index = stream.IndexOf("viewers");
-            Match match = Regex.Match(stream.Substring(index), "\"([^\"]*)\",");
+            Match match = Regex.Match(stream.Substring(index), "\"([^\"]*)\"[,|\n\\]]");
             while (match.Success)
             {
                 name = match.Groups[1].ToString();
