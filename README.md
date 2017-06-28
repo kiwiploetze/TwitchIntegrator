@@ -33,4 +33,4 @@ https://github.com/sschoener/cities-skylines-detour
 
 Most credits go to those two developers.
 
-This Mod was developed for the german YTer "Gronkh", that is why his user name is the default.
+This Mod was developed for the german YTer "Gronkh", that is why his channel is the default.
