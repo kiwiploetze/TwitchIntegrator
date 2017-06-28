@@ -9,16 +9,18 @@ The internal list of viewers will be periodically updated (which means new viewe
 ##Config file location##
 ###Windows###
 ```
-C:\Users\<username>\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\TwitchIntegrator\config.txt
+C:\Users\<username>\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\TwitchIntegrator\TwitchIntegrator.conf
 ```
 
 ##Detailed instructions##
-* Configure the Mod via the config.txt
-  * The format of the config file is JSON
-  * The "user" value should be your Twitch Name (Default: "gronkh")
-  * The "*Adds" are some suffix lists for each building category and the roads which will be appended randomly to the viewers name (Default: Some typical german suffixes)
-  * The "updateRate" is a number, which indicates how many simulation ticks should be waited before new viewer names will be added to the internal list. If you don't want an update set the value to "-1".
- 
+* UpdateRate is a number which indicates how many simulation frames shoul be waited until an viewer update is performed
+* If you don't want an update set the UpdateRate to -1
+* Configure the Mod either by the built-in option menu or the config file
+* Config file syntax:
+	* <key>: <value>
+	* <value> of *Adds is a comma separated list
+
+
 
 The Mod is based on the functional idea of Andrew Wu's WufireNameGenerator:
 https://github.com/wufire/CitiesSkylinesBuildingNameGenerator
@@ -28,4 +30,4 @@ https://github.com/sschoener/cities-skylines-detour
 
 Most credits go to those two developers.
 
-This Mod was developed for the famous german YTer "Gronkh", that is why his user name is the default.
+This Mod was developed for the german YTer "Gronkh", that is why his user name is the default.
