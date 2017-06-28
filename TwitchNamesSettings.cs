@@ -33,12 +33,13 @@ namespace TwitchIntegrator
 
             string file = configFilePath + configFileName;
 
+            if (!Directory.Exists(configFilePath))
+            {
+                Directory.CreateDirectory(configFilePath);
+            }
+
             if (!FileUtils.Exists(file))
             {
-                if (!Directory.Exists(configFilePath))
-                {
-                    Directory.CreateDirectory(configFilePath);
-                }
                 FileStream fs = File.Create(file);
                 fs.Close();
                 LoadDefaults();
